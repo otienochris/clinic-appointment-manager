@@ -3,13 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package appointmentmanagementsystem;
-
 /**
  *
  * @author chris
  */
 public class LoginPage extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form LoginPage
      */
@@ -183,6 +182,7 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

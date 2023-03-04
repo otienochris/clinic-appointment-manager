@@ -4,6 +4,9 @@
  */
 package appointmentmanagementsystem;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author chris
@@ -15,6 +18,8 @@ public class DoctorsPage extends javax.swing.JFrame {
      */
     public DoctorsPage() {
         initComponents();
+
+        initializeAppointmentTable();
     }
 
     /**
@@ -34,7 +39,7 @@ public class DoctorsPage extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        appointmentsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
@@ -109,7 +114,7 @@ public class DoctorsPage extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -125,7 +130,11 @@ public class DoctorsPage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(appointmentsTable);
+        if (appointmentsTable.getColumnModel().getColumnCount() > 0) {
+            appointmentsTable.getColumnModel().getColumn(0).setResizable(false);
+            appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        }
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Monospaced", 2, 14)); // NOI18N
@@ -316,31 +325,31 @@ public class DoctorsPage extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void dateFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFromActionPerformed
         // TODO add your handling code here:
-       txtDateFrom.setText(  new DatePicker(this).setPickedDate());
+        txtDateFrom.setText(new DatePicker(this).setPickedDate());
     }//GEN-LAST:event_dateFromActionPerformed
 
     private void dateToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateToActionPerformed
         // TODO add your handling code here:
-        txtDateTo.setText(  new DatePicker(this).setPickedDate());
+        txtDateTo.setText(new DatePicker(this).setPickedDate());
     }//GEN-LAST:event_dateToActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-/* Set the Nimbus look and feel */
+
+        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -371,6 +380,7 @@ public class DoctorsPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable appointmentsTable;
     private javax.swing.JButton dateFrom;
     private javax.swing.JButton dateTo;
     private javax.swing.JButton jButton1;
@@ -389,9 +399,55 @@ public class DoctorsPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField txtDateFrom;
     private javax.swing.JTextField txtDateTo;
     // End of variables declaration//GEN-END:variables
+
+    private void initializeAppointmentTable() {
+        String[] headers = {"ID", "TYPE", "PATIENT", "STAFF", "STATUS", "TIME", "DATE"};
+        final List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
+        if (appointments.isEmpty()) {
+
+        } else {
+            appointments.remove(0); // remove the headers
+            if (appointments.isEmpty()) {
+
+            } else {
+                String[][] tableData = new String[appointments.size()][headers.length];
+
+                int[] count = {0};
+                appointments.forEach(item -> {
+                    String[] i = item.split(AppointmentManagementSystem.FILE_DELIMITER);
+                    tableData[count[0]][0] = i[0];
+                    tableData[count[0]][1] = i[1]; // category
+
+                    final String[] patient = AppointmentManagementSystem.getRecordById(i[4], AppointmentManagementSystem.USER_TXT_FILE);
+                    if (patient != null && patient.length > 0) {
+                        tableData[count[0]][2] = patient[0] + " : " + patient[3] + " " + patient[2]; // patient
+                    } else {
+                         tableData[count[0]][2] = i[4]; // patient
+                    }
+
+                    final String[] staff = AppointmentManagementSystem.getRecordById(i[3], AppointmentManagementSystem.USER_TXT_FILE);
+                    if(staff != null && staff.length > 0) {
+                        tableData[count[0]][3] = staff[0] + " : " + staff[3] + " " + staff[2]; // patient
+                    } else  {
+                        tableData[count[0]][3] = i[3]; // staff
+                    }
+
+                    tableData[count[0]][4] = i[5]; // status
+                    // TODO: get time and date
+
+                    String [] timeSlot = AppointmentManagementSystem.getRecordById(i[2], AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
+                    tableData[count[0]][5] = timeSlot[1];
+                    tableData[count[0]][6] = timeSlot[2];
+                    count[0] += 1;
+                });
+
+                DefaultTableModel model = new DefaultTableModel(tableData, headers);
+                appointmentsTable.setModel(model);
+            }
+        }
+    }
 }
