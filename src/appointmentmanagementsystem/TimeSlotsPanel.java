@@ -363,7 +363,7 @@ public class TimeSlotsPanel extends javax.swing.JPanel {
                     txtDate.getText() + AppointmentManagementSystem.FILE_DELIMITER + 
                     hourToSpinner.getValue() + ":" + minutesToSpinner.getValue() + AppointmentManagementSystem.FILE_DELIMITER +
                     typeCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + 
-                    statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + "1002";
+                    statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + AppointmentManagementSystem.loggedInUserId;
             AppointmentManagementSystem.writeLineToFile(AppointmentManagementSystem.TIME_SLOTS_TXT_FILE, newRecord);
             clearFields();
              initializeTimeSlotTables();
@@ -375,7 +375,7 @@ public class TimeSlotsPanel extends javax.swing.JPanel {
                     txtDate.getText() + AppointmentManagementSystem.FILE_DELIMITER + 
                     hourToSpinner.getValue() + ":" + minutesToSpinner.getValue() + AppointmentManagementSystem.FILE_DELIMITER +
                     typeCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + 
-                    statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + "1002";
+                    statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + AppointmentManagementSystem.loggedInUserId;
             
             AppointmentManagementSystem.updateRecord(Integer.valueOf(id), updatedRecord, AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
             clearFields();

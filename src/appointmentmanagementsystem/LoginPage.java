@@ -87,7 +87,7 @@ public class LoginPage extends javax.swing.JFrame {
         btnSignup.setBackground(new java.awt.Color(255, 255, 255));
         btnSignup.setFont(new java.awt.Font("Monospaced", 3, 15)); // NOI18N
         btnSignup.setForeground(new java.awt.Color(0, 0, 0));
-        btnSignup.setText("dont have account? signup");
+        btnSignup.setText("dont have an account? signup");
         btnSignup.setBorder(null);
         btnSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,13 +172,16 @@ public class LoginPage extends javax.swing.JFrame {
                 final String[] userDetails = user.get(0).split(AppointmentManagementSystem.FILE_DELIMITER);
                 AppointmentManagementSystem.loggedInUserId = userDetails[0];
                 AppointmentManagementSystem.loggedInUserRole = userDetails[1];
-                AppointmentManagementSystem.loggedInUserName = userDetails[2];
+                AppointmentManagementSystem.loggedInUserName = userDetails[2].replaceAll("\\s+", "");
 
-                if (AppointmentManagementSystem.loggedInUserName.equalsIgnoreCase("PATIENT")) {
-                    JOptionPane.showMessageDialog(null, "Yet to implement");
-                } else {
+                if (AppointmentManagementSystem.loggedInUserRole.equalsIgnoreCase("PATIENT")) {
+                    this.dispose();
+                    new PatientsPage().setVisible(true);
+                } else if (AppointmentManagementSystem.loggedInUserRole.equalsIgnoreCase("STAFF")) {
                     this.dispose();
                     new DoctorsPage().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Unidentified role: " + AppointmentManagementSystem.loggedInUserRole);
                 }
             }
         }
