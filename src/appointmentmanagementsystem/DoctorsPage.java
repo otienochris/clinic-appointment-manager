@@ -4,25 +4,27 @@
  */
 package appointmentmanagementsystem;
 
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.DefaultTableModel;
+import java.awt.CardLayout;
 
 /**
  *
  * @author chris
  */
 public class DoctorsPage extends javax.swing.JFrame {
-
+    
+    private CardLayout cardLayout = new CardLayout();
+    private final String APPOINTMENTS = "APPOINTMENTS";
+    private final String TIME_SLOTS = "TIME_SLOTS";
     /**
      * Creates new form DoctorsPage
      */
     public DoctorsPage() {
-        initComponents();
-
-        initializeAppointmentTable();
+        initComponents(); 
+        this.setLocationRelativeTo(null);
+        
+        mainPanel.setLayout(cardLayout);
+        mainPanel.add(new AppointmentsPanel(this), APPOINTMENTS);
+        mainPanel.add(new TimeSlotsPanel(this), TIME_SLOTS);
     }
 
     /**
@@ -40,22 +42,7 @@ public class DoctorsPage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        appointmentsTable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        appointmentTypesCombo = new javax.swing.JComboBox<>();
-        btnSearch = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        txtDateFrom = new javax.swing.JTextField();
-        txtDateTo = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        dateTo = new javax.swing.JButton();
-        dateFrom = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +57,11 @@ public class DoctorsPage extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Appointments");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
         jButton2.setText("Patient Records");
@@ -81,6 +73,11 @@ public class DoctorsPage extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
         jButton3.setText("Time Slots");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,198 +113,20 @@ public class DoctorsPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setMaximumSize(new java.awt.Dimension(1663, 885));
+        mainPanel.setMinimumSize(new java.awt.Dimension(1663, 885));
 
-        appointmentsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Type", "Title", "Description", "Date and time"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(appointmentsTable);
-        if (appointmentsTable.getColumnModel().getColumnCount() > 0) {
-            appointmentsTable.getColumnModel().getColumn(0).setResizable(false);
-            appointmentsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        }
-
-        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Monospaced", 2, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("type:");
-
-        appointmentTypesCombo.setBackground(new java.awt.Color(255, 255, 255));
-        appointmentTypesCombo.setFont(new java.awt.Font("Monospaced", 2, 18)); // NOI18N
-        appointmentTypesCombo.setForeground(new java.awt.Color(0, 0, 0));
-        appointmentTypesCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MEDICAL CHECKUP", "TREATMENT", "ENQUIRY", "INJECTION", "COUNSELLING" }));
-
-        btnSearch.setBackground(new java.awt.Color(204, 102, 0));
-        btnSearch.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearch.setText("filter");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setFont(new java.awt.Font("Monospaced", 3, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(204, 102, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Appointments");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 102, 0)));
-
-        jButton5.setBackground(new java.awt.Color(204, 102, 0));
-        jButton5.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Today's Appointments");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel5.setFont(new java.awt.Font("Monospaced", 2, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("from date:");
-
-        txtDateFrom.setEditable(false);
-        txtDateFrom.setBackground(new java.awt.Color(255, 255, 255));
-        txtDateFrom.setFont(new java.awt.Font("Monospaced", 2, 18)); // NOI18N
-        txtDateFrom.setForeground(new java.awt.Color(0, 0, 0));
-        txtDateFrom.setFocusable(false);
-
-        txtDateTo.setEditable(false);
-        txtDateTo.setBackground(new java.awt.Color(255, 255, 255));
-        txtDateTo.setFont(new java.awt.Font("Monospaced", 2, 18)); // NOI18N
-        txtDateTo.setForeground(new java.awt.Color(0, 0, 0));
-        txtDateTo.setFocusable(false);
-
-        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel6.setFont(new java.awt.Font("Monospaced", 2, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("to date:");
-
-        dateTo.setText("select");
-        dateTo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateToActionPerformed(evt);
-            }
-        });
-
-        dateFrom.setText("select");
-        dateFrom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateFromActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("Monospaced", 3, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Filters:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(appointmentTypesCombo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(180, 180, 180)))
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dateFrom)))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtDateTo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dateTo)))
-                                .addGap(42, 42, 42)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator2)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE))
-                .addContainerGap(293, Short.MAX_VALUE))
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1663, Short.MAX_VALUE)
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtDateFrom, txtDateTo});
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {dateFrom, dateTo});
-
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(txtDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(dateTo)
-                                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(dateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(appointmentTypesCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(21, 21, 21))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 886, Short.MAX_VALUE)
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {appointmentTypesCombo, btnSearch, jButton5});
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dateFrom, dateTo});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -316,14 +135,14 @@ public class DoctorsPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -331,103 +150,18 @@ public class DoctorsPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-
+        mainPanel = new TimeSlotsPanel(this);
+        mainPanel.removeAll();
+        this.add(new TimeSlotsPanel(this));
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cardLayout.show(mainPanel, APPOINTMENTS);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void dateFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFromActionPerformed
-        // TODO add your handling code here:
-        txtDateFrom.setText(new DatePicker(this).setPickedDate());
-    }//GEN-LAST:event_dateFromActionPerformed
-
-    private void dateToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateToActionPerformed
-        // TODO add your handling code here:
-        txtDateTo.setText(new DatePicker(this).setPickedDate());
-    }//GEN-LAST:event_dateToActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String[] headers = {"ID", "TYPE", "PATIENT", "STAFF", "STATUS", "TIME", "DATE"};
-        List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
-        if (appointments.isEmpty()) {
-
-        } else {
-            appointments.remove(0); // remove the headers
-            if (appointments.isEmpty()) {
-
-            } else {
-                final String selectedItem = (String) appointmentTypesCombo.getSelectedItem();
-
-                // perform filters
-                if (!selectedItem.equalsIgnoreCase(AppointmentTypeEnum.ALL.name())) {
-                    appointments = appointments.stream()
-                            .filter(item -> item.split(AppointmentManagementSystem.FILE_DELIMITER)[1].equalsIgnoreCase(selectedItem))
-                            .collect(Collectors.toList());
-                }
-                final String dateFrom = txtDateFrom.getText();
-                final String dateTo = txtDateTo.getText();
-
-                if (!dateFrom.isBlank() && !dateFrom.isEmpty() && !dateTo.isBlank() && !dateTo.isEmpty()) {
-                    appointments = appointments.stream()
-                            .filter(item -> {
-                                String timeSlot = item.split(AppointmentManagementSystem.FILE_DELIMITER)[2];
-                                String[] timeSlotRecord = AppointmentManagementSystem.getRecordById(timeSlot, AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
-                                final String[] timeDetails = timeSlotRecord[2].split("-");
-                                
-                                final String[] filterTimeFromDetails = txtDateFrom.getText().split("-");
-                                final String[] filterTimeToDetails = txtDateTo.getText().split("-");
-                                
-                                final boolean after = new Date(Integer.parseInt(timeDetails[2]), Integer.parseInt(timeDetails[1]), Integer.parseInt(timeDetails[0])).after(new Date(Integer.parseInt(filterTimeFromDetails[2]),Integer.parseInt(filterTimeFromDetails[1]),Integer.parseInt(filterTimeFromDetails[0])));
-                                final boolean before = new Date(Integer.parseInt(timeDetails[2]), Integer.parseInt(timeDetails[1]), Integer.parseInt(timeDetails[0])).before(new Date(Integer.parseInt(filterTimeToDetails[2]),Integer.parseInt(filterTimeToDetails[1]),Integer.parseInt(filterTimeToDetails[0])));
-                                
-                                return after && before;
-                            })
-                    .collect(Collectors.toList());
-                }
-
-                String[][] tableData = new String[appointments.size()][headers.length];
-
-                int[] count = {0};
-                appointments.forEach(item -> {
-                    String[] i = item.split(AppointmentManagementSystem.FILE_DELIMITER);
-                    tableData[count[0]][0] = i[0];
-                    tableData[count[0]][1] = i[1]; // category
-
-                    final String[] patient = AppointmentManagementSystem.getRecordById(i[4], AppointmentManagementSystem.USER_TXT_FILE);
-                    if (patient != null && patient.length > 0) {
-                        tableData[count[0]][2] = patient[0] + " : " + patient[3] + " " + patient[2]; // patient
-                    } else {
-                        tableData[count[0]][2] = i[4]; // patient
-                    }
-
-                    final String[] staff = AppointmentManagementSystem.getRecordById(i[3], AppointmentManagementSystem.USER_TXT_FILE);
-                    if (staff != null && staff.length > 0) {
-                        tableData[count[0]][3] = staff[0] + " : " + staff[3] + " " + staff[2]; // patient
-                    } else {
-                        tableData[count[0]][3] = i[3]; // staff
-                    }
-
-                    tableData[count[0]][4] = i[5]; // status
-                    // TODO: get time and date
-
-                    String[] timeSlot = AppointmentManagementSystem.getRecordById(i[2], AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
-                    tableData[count[0]][5] = timeSlot[1];
-                    tableData[count[0]][6] = timeSlot[2];
-
-                    // between dates
-                    count[0] += 1;
-                });
-
-                DefaultTableModel model = new DefaultTableModel(tableData, headers);
-                appointmentsTable.setModel(model);
-            }
-        }
-    }//GEN-LAST:event_btnSearchActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        cardLayout.show(mainPanel, TIME_SLOTS);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -465,79 +199,13 @@ public class DoctorsPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> appointmentTypesCombo;
-    private javax.swing.JTable appointmentsTable;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JButton dateFrom;
-    private javax.swing.JButton dateTo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField txtDateFrom;
-    private javax.swing.JTextField txtDateTo;
+    private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 
-    private void initializeAppointmentTable() {
-
-        // set appointment types
-        final String[] appointmentTypes = AppointmentManagementSystem.getEnumNames(AppointmentTypeEnum.class);
-        appointmentTypesCombo.setModel(new DefaultComboBoxModel<>(appointmentTypes));
-
-        String[] headers = {"ID", "TYPE", "PATIENT", "STAFF", "STATUS", "TIME", "DATE"};
-        final List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
-        if (appointments.isEmpty()) {
-
-        } else {
-            appointments.remove(0); // remove the headers
-            if (appointments.isEmpty()) {
-
-            } else {
-                String[][] tableData = new String[appointments.size()][headers.length];
-
-                int[] count = {0};
-                appointments.forEach(item -> {
-                    String[] i = item.split(AppointmentManagementSystem.FILE_DELIMITER);
-                    tableData[count[0]][0] = i[0];
-                    tableData[count[0]][1] = i[1]; // category
-
-                    final String[] patient = AppointmentManagementSystem.getRecordById(i[4], AppointmentManagementSystem.USER_TXT_FILE);
-                    if (patient != null && patient.length > 0) {
-                        tableData[count[0]][2] = patient[0] + " : " + patient[3] + " " + patient[2]; // patient
-                    } else {
-                        tableData[count[0]][2] = i[4]; // patient
-                    }
-
-                    final String[] staff = AppointmentManagementSystem.getRecordById(i[3], AppointmentManagementSystem.USER_TXT_FILE);
-                    if (staff != null && staff.length > 0) {
-                        tableData[count[0]][3] = staff[0] + " : " + staff[3] + " " + staff[2]; // patient
-                    } else {
-                        tableData[count[0]][3] = i[3]; // staff
-                    }
-
-                    tableData[count[0]][4] = i[5]; // status
-                    // TODO: get time and date
-
-                    String[] timeSlot = AppointmentManagementSystem.getRecordById(i[2], AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
-                    tableData[count[0]][5] = timeSlot[1];
-                    tableData[count[0]][6] = timeSlot[2];
-                    count[0] += 1;
-                });
-
-                DefaultTableModel model = new DefaultTableModel(tableData, headers);
-                appointmentsTable.setModel(model);
-            }
-        }
-    }
 }

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -300,10 +301,32 @@ public class AppointmentManagementSystem {
     }
 
     /**
-     *This method returns enumeration values as array of strings
+     * This method returns enumeration values as array of strings
      */
     public static String[] getEnumNames(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+    }
+
+    /**
+     * This method checks if a date is between a range of dates. The expected date format is dd-MM-yyyy eg 31-12-2023
+     *
+     * @param dateToValidate - the date being validated
+     * @param dateFrom - date from
+     * @param dateTo - date to
+     * 
+     * @return true if date between range
+     */
+    public static boolean isDateBetweenTwoDates(String dateToValidate, String dateFrom, String dateTo) {
+        
+        final String[] timeDetails = dateToValidate.split("-");
+
+        final String[] filterTimeFromDetails = dateFrom.split("-");
+        final String[] filterTimeToDetails = dateTo.split("-");
+
+        final boolean after = new Date(Integer.parseInt(timeDetails[2]), Integer.parseInt(timeDetails[1]), Integer.parseInt(timeDetails[0])).after(new Date(Integer.parseInt(filterTimeFromDetails[2]), Integer.parseInt(filterTimeFromDetails[1]), Integer.parseInt(filterTimeFromDetails[0])));
+        final boolean before = new Date(Integer.parseInt(timeDetails[2]), Integer.parseInt(timeDetails[1]), Integer.parseInt(timeDetails[0])).before(new Date(Integer.parseInt(filterTimeToDetails[2]), Integer.parseInt(filterTimeToDetails[1]), Integer.parseInt(filterTimeToDetails[0])));
+
+        return after && before;
     }
 
     public static String[][] getTableData(List<String> data) {
