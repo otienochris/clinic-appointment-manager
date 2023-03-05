@@ -4,10 +4,14 @@
  */
 package appointmentmanagementsystem;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +22,7 @@ public class AppointmentsPanel extends javax.swing.JPanel {
     final String[] headersForAppointmentTable = {"ID", "TYPE", "PATIENT", "STAFF", "STATUS", "DATE", "TIME FROM", "TIME TO"};
 
     private final JFrame prevFrame;
+    List<String> appointments = new ArrayList<>();
     /**
      * Creates new form MainPanel
      * 
@@ -28,6 +33,35 @@ public class AppointmentsPanel extends javax.swing.JPanel {
         initComponents();
         appointmentTypesCombo.setModel(new DefaultComboBoxModel<>(AppointmentManagementSystem.getEnumNames(AppointmentTypeEnum.class)));
         initializeAppointmentDetails();
+        
+        appointmentsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                final int selectedRow = appointmentsTable.getSelectedRow();
+                
+                final String[] appointment = appointments.get(selectedRow).split(AppointmentManagementSystem.FILE_DELIMITER);
+                final String[] recordById = AppointmentManagementSystem.getRecordById(appointment[0],AppointmentManagementSystem.APPOINTMENT_FILE);
+                final String[] action = new String[]{"APPROVE","DECLINE","PENDING"};
+                
+                final int selectedOption = JOptionPane.showOptionDialog(null, "Review and Approve this request for Appointment", "APPOINTMENTS", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE, null, action, "APPROVE");
+                
+                System.out.println("" + selectedOption);
+                recordById[5] = action[selectedOption];
+                String updatedRecord = "";
+                for(int i = 0; i < recordById.length ; i++) {
+                    updatedRecord += recordById[i];
+                    if (i != recordById.length -1 ) {
+                        updatedRecord += AppointmentManagementSystem.FILE_DELIMITER;
+                    }
+                }
+                
+                System.out.println("" + updatedRecord);
+                
+                
+                AppointmentManagementSystem.updateRecord(Integer.parseInt(recordById[0]), updatedRecord, AppointmentManagementSystem.APPOINTMENT_FILE);
+                initializeAppointmentDetails();
+                JOptionPane.showMessageDialog(null, "Appointment changed to: " + action[selectedOption]);
+            }});
     }
 
     /**
@@ -253,7 +287,7 @@ public class AppointmentsPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
-        List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
+        appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
         if (appointments.isEmpty()) {
 
         } else {
@@ -322,6 +356,7 @@ public class AppointmentsPanel extends javax.swing.JPanel {
                 appointmentsTable.setModel(model);
             }
         }
+       
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -353,7 +388,7 @@ public class AppointmentsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initializeAppointmentDetails() {
-        List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
+        appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
         if (appointments.isEmpty()) {
 
         } else {

@@ -4,6 +4,7 @@
  */
 package appointmentmanagementsystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
@@ -19,6 +20,7 @@ public class PatientAppointmentPanel extends javax.swing.JPanel {
     final String[] headersForAppointmentTable = {"ID", "TYPE", "PATIENT", "STAFF", "STATUS", "DATE", "TIME FROM", "TIME TO"};
     
     private final JFrame prevFrame;
+    List<String> appointments = new ArrayList<>();
     
     /**
      * Creates new form PatientAppointPanel
@@ -246,9 +248,8 @@ public class PatientAppointmentPanel extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
-        List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE)
-                .stream().filter(item -> item.split(AppointmentManagementSystem.FILE_DELIMITER)[4].equalsIgnoreCase(AppointmentManagementSystem.loggedInUserId))
-                .collect(Collectors.toList());
+        appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
+                
         if (appointments.isEmpty()) {
 
         } else {
@@ -257,6 +258,10 @@ public class PatientAppointmentPanel extends javax.swing.JPanel {
 
             } else {
                 final String selectedItem = (String) appointmentTypesCombo.getSelectedItem();
+                
+                appointments = appointments.stream()
+                        .filter(item -> item.split(AppointmentManagementSystem.FILE_DELIMITER)[4].equalsIgnoreCase(AppointmentManagementSystem.loggedInUserId))
+                .collect(Collectors.toList());
 
                 // perform filters
                 if (!selectedItem.equalsIgnoreCase(AppointmentTypeEnum.ALL.name())) { // filter by catergory/type
@@ -341,9 +346,7 @@ public class PatientAppointmentPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDateTo;
     // End of variables declaration//GEN-END:variables
 private void initializeAppointmentDetails() {
-        List<String> appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE)
-                .stream().filter(item -> item.split(AppointmentManagementSystem.FILE_DELIMITER)[4].equalsIgnoreCase(AppointmentManagementSystem.loggedInUserId))
-                .collect(Collectors.toList());
+        appointments = AppointmentManagementSystem.getData(AppointmentManagementSystem.APPOINTMENT_FILE);
         if (appointments.isEmpty()) {
 
         } else {
@@ -353,6 +356,11 @@ private void initializeAppointmentDetails() {
             } else {
 
                 String[][] tableData = new String[appointments.size()][headersForAppointmentTable.length];
+                
+                System.out.println("" + AppointmentManagementSystem.loggedInUserId);
+                appointments = appointments.stream()
+                        .filter(item -> item.split(AppointmentManagementSystem.FILE_DELIMITER)[4].equalsIgnoreCase(AppointmentManagementSystem.loggedInUserId))
+                .collect(Collectors.toList());
 
                 int[] count = {0};
                 appointments.forEach(item -> {
