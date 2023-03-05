@@ -365,7 +365,7 @@ public class TimeSlotsPanel extends javax.swing.JPanel {
                     typeCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + 
                     statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + "1002";
             AppointmentManagementSystem.writeLineToFile(AppointmentManagementSystem.TIME_SLOTS_TXT_FILE, newRecord);
-            
+            clearFields();
              initializeTimeSlotTables();
             
             JOptionPane.showMessageDialog(null, "Time slot saved successfully", "Time Slot - Saved", JOptionPane.PLAIN_MESSAGE);
@@ -378,6 +378,7 @@ public class TimeSlotsPanel extends javax.swing.JPanel {
                     statusCombo.getSelectedItem() + AppointmentManagementSystem.FILE_DELIMITER + "1002";
             
             AppointmentManagementSystem.updateRecord(Integer.valueOf(id), updatedRecord, AppointmentManagementSystem.TIME_SLOTS_TXT_FILE);
+            clearFields();
             initializeTimeSlotTables();
             JOptionPane.showMessageDialog(null, "Time slot updated successfully", "Time Slot - Updated", JOptionPane.PLAIN_MESSAGE);
         }
@@ -442,5 +443,14 @@ public class TimeSlotsPanel extends javax.swing.JPanel {
                 timeSlotsTable.setModel(model);
             }
         }
+    }
+    
+    private void clearFields() {
+        idLabel.setText("");
+        txtDate.setText("");
+        hourFromSpinner.setValue(0);
+        minutesFromSpinner.setValue(0);
+        hourToSpinner.setValue(0);
+        minutesToSpinner.setValue(0);
     }
 }

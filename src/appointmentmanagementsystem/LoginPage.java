@@ -3,17 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package appointmentmanagementsystem;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author chris
  */
 public class LoginPage extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form LoginPage
      */
     public LoginPage() {
+
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -27,17 +34,17 @@ public class LoginPage extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnSignup = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 249, 245));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
@@ -46,12 +53,12 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel1.setText("Welcome to Total Welness Clinic");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Monospaced", 2, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
+        txtUsername.setFont(new java.awt.Font("Monospaced", 2, 18)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(0, 0, 0));
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
 
@@ -63,23 +70,28 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Password:");
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
+        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtPassword.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
 
-        jButton1.setBackground(new java.awt.Color(255, 153, 0));
-        jButton1.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Login");
-
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Monospaced", 3, 15)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("dont have account? signup");
-        jButton2.setBorder(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setBackground(new java.awt.Color(255, 153, 0));
+        btnLogin.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnSignup.setBackground(new java.awt.Color(255, 255, 255));
+        btnSignup.setFont(new java.awt.Font("Monospaced", 3, 15)); // NOI18N
+        btnSignup.setForeground(new java.awt.Color(0, 0, 0));
+        btnSignup.setText("dont have account? signup");
+        btnSignup.setBorder(null);
+        btnSignup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignupActionPerformed(evt);
             }
         });
 
@@ -96,11 +108,11 @@ public class LoginPage extends javax.swing.JFrame {
                         .addGap(454, 454, 454)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPassword)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator1))))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
@@ -112,18 +124,18 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGap(64, 64, 64)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addComponent(btnSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,13 +152,37 @@ public class LoginPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
+        this.dispose();
+        new SignupPage().setVisible(true);
+    }//GEN-LAST:event_btnSignupActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(null, "Username and password is required to login");
+        } else {
+            final List<String> user = AppointmentManagementSystem.getData(AppointmentManagementSystem.USER_TXT_FILE).stream().filter(item -> item.contains(txtUsername.getText()) && item.contains(txtPassword.getText())).collect(Collectors.toList());
+            if (user.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid Credentials");
+            } else {
+                final String[] userDetails = user.get(0).split(AppointmentManagementSystem.FILE_DELIMITER);
+                AppointmentManagementSystem.loggedInUserId = userDetails[0];
+                AppointmentManagementSystem.loggedInUserRole = userDetails[1];
+                AppointmentManagementSystem.loggedInUserName = userDetails[2];
+
+                if (AppointmentManagementSystem.loggedInUserName.equalsIgnoreCase("PATIENT")) {
+                    JOptionPane.showMessageDialog(null, "Yet to implement");
+                } else {
+                    this.dispose();
+                    new DoctorsPage().setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,17 +218,17 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnSignup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
