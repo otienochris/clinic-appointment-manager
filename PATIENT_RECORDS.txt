@@ -1,2 +1,6 @@
 ID<>PATIENT_ID<>STAFF_ID<>DIAGNOSIS<>MEDICATION<>DATE<>PATIENT_EMAIL
 7001<>1002<>1001<>Cough<>Anti Biotics<>01-01-2023<>johndoe@gmail.com
+7002<>1002<>1001<>Headache<>Painkiller<>17-03-2023<>johndoe@gmail.com
+7003<>1002<>1001<>Vomitig<>Brufen<>16-03-2023<>johndoe@gmail.com
+7004<>1003<>1001<>Headache<>Brufen<>07-03-2023<>eugensmart@gmail.com
+7005<>1003<>1001<>Vomiting<>Some medication<>07-03-2023<>eugensmart@gmail.com
