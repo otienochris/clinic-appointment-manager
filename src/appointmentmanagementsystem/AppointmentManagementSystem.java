@@ -32,6 +32,7 @@ public class AppointmentManagementSystem {
     public static String USER_TXT_FILE = "USERS.txt";
     public static String APPOINTMENT_FILE = "APPOINTMENTS.txt";
     public static String TIME_SLOTS_TXT_FILE = "TIME_SLOTS.txt";
+    public static String PATIENTS_RECORDS_TXT_FILE = "PATIENT_RECORDS.txt";
 
     /**
      * @param args the command line arguments
